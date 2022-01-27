@@ -684,6 +684,32 @@ for (i in 1:19){
 
 do.call(grid.arrange,p)
 
+# Getting data of total biomass and average mass 
+df_all<-data.frame(matrix(ncol=7,nrow=length(focal_sp)))
+
+df_all[,1]<-focal_sp
+colnames(df_all)[1]<-"species"
+
+for (i in 1:length(focal_sp)){
+  
+  df<-nf[nf$Species==focal_sp[i],]
+  df2<-nf2[nf2$sp==focal_sp[i],]
+  
+  df_all[i,2]<-sum(df[df$scenario=="rcp2013",]$value)
+  df_all[i,3]<-sum(df[df$scenario=="rcp45",]$value)
+  df_all[i,4]<-sum(df[df$scenario=="rcp85",]$value)
+  
+  df_all[i,5]<-sum(df2[df2$scenario=="rcp2013",]$w*df2[df2$scenario=="rcp2013",]$value)/sum(df2[df2$scenario=="rcp2013",]$value)
+  df_all[i,6]<-sum(df2[df2$scenario=="rcp45",]$w*df2[df2$scenario=="rcp45",]$value)/sum(df2[df2$scenario=="rcp45",]$value)
+  df_all[i,7]<-sum(df2[df2$scenario=="rcp85",]$w*df2[df2$scenario=="rcp85",]$value)/sum(df2[df2$scenario=="rcp85",]$value)  
+  
+}
+
+colnames(df_all)[2:7]<-c("biomass_2013","biomass_rcp45","biomass_rcp85",
+                         "avgMass_2013","avgMass_rcp45","avgMass_rcp85")
+
+write_csv(df_all,"~/Desktop/df.csv")
+
 # Plotting relative biomass density ~ size
 nf<-read_csv("size_spectra_biomassdensity.csv")
 
@@ -1034,7 +1060,20 @@ reg_rcp45_red2<-lm(log10(as.numeric(dBiomass_rcp45)+1)~log10(as.numeric(dVb_rcp4
 
 reg_rcp45_red3<-lm(log10(as.numeric(dBiomass_rcp45)+1)~log10(as.numeric(dGrid_rcp45)+1),data = df)
 
-AIC(reg_rcp45_all,reg_rcp45_red1,reg_rcp45_red2,reg_rcp45_red3)
+# Full - dW_inf
+reg_rcp45_red4<-lm(log10(as.numeric(dBiomass_rcp45)+1)~
+                     log10(as.numeric(dVb_rcp45)+1)+log10(as.numeric(dGrid_rcp45)+1),data = df)
+
+# Full - dVb
+reg_rcp45_red5<-lm(log10(as.numeric(dBiomass_rcp45)+1)~log10(as.numeric(dW_inf_rcp45)+1)
+                     +log10(as.numeric(dGrid_rcp45)+1),data = df)
+
+# Full - dGrid
+reg_rcp45_red6<-lm(log10(as.numeric(dBiomass_rcp45)+1)~log10(as.numeric(dW_inf_rcp45)+1)+
+                     log10(as.numeric(dVb_rcp45)+1),data = df)
+
+
+AIC(reg_rcp45_all,reg_rcp45_red1,reg_rcp45_red2,reg_rcp45_red3,reg_rcp45_red4,reg_rcp45_red5,reg_rcp45_red6)
 
 Anova(reg_rcp45_all,type = 3)
 
@@ -1049,6 +1088,21 @@ reg_rcp85_red2<-lm(log10(as.numeric(dBiomass_rcp85)+1)~log10(as.numeric(dVb_rcp8
 
 reg_rcp85_red3<-lm(log10(as.numeric(dBiomass_rcp85)+1)~log10(as.numeric(dGrid_rcp85)+1),data = df)
 
-AIC(reg_rcp85_all,reg_rcp85_red1,reg_rcp85_red2,reg_rcp85_red3)
+# Full - dW_inf
+reg_rcp85_red4<-lm(log10(as.numeric(dBiomass_rcp85)+1)~
+                     log10(as.numeric(dVb_rcp85)+1)+log10(as.numeric(dGrid_rcp85)+1),data = df)
+
+# Full - dVb
+reg_rcp85_red5<-lm(log10(as.numeric(dBiomass_rcp85)+1)~log10(as.numeric(dW_inf_rcp85)+1)
+                   +log10(as.numeric(dGrid_rcp85)+1),data = df)
+
+# Full - dGrid
+reg_rcp85_red6<-lm(log10(as.numeric(dBiomass_rcp85)+1)~log10(as.numeric(dW_inf_rcp85)+1)+
+                     log10(as.numeric(dVb_rcp85)+1),data = df)
+
+
+
+
+AIC(reg_rcp85_all,reg_rcp85_red1,reg_rcp85_red2,reg_rcp85_red3,reg_rcp85_red4,reg_rcp85_red5,reg_rcp85_red6)
 
 summary(reg_rcp85_all)
