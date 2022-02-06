@@ -1,5 +1,5 @@
 # warm-fishes
-Investigating the effect of warming on large marine fish communities by combining species distribution modeling, life-history modeling, and size spectrum modeling (mizer).
+Analytical R codes and data files accompanying the manuscript **"Assessing warming impacts on marine fishes by integrating physiology-guided distribution projections, life-history changes, and food web dynamics"**, currenctly in revision for Methods in Ecology and Evolution.
 
 Below is a list of files in this repository along with brief descriptions:
 
