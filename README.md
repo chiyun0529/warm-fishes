@@ -3,8 +3,8 @@ Investigating the effect of warming on large marine fish communities by combinin
 
 Below is a list of files in this repository along with brief descriptions:
 
-**1. Bayesian_SDM.R:** R code for running Bayesian SDMs. From Talluto et al. (2016) 
-**2. hybrid_SDM.R:** R code for running the Bayesian SDMs and performing cross-validations
+1. **Bayesian_SDM.R:** R code for running Bayesian SDMs. From Talluto et al. (2016) 
+2. **hybrid_SDM.R:** R code for running the Bayesian SDMs and performing cross-validations
 **3. interactions_2013.csv:** the interacton matrix for the 2013 mizer model
 **4. interactions_rcp45.csv:** the interaction matricx for the 2100-RCP4.5 mizer model
 **5. interactions_rcp85.csv:** the interaction matricx for the 2100-RCP8.5 mizer model
